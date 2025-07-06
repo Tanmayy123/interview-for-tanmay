@@ -10,6 +10,8 @@ import {
   fetchUpcomingLaunches,
 } from "./api/spacex";
 import "./App.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PER_PAGE = 12;
 
@@ -179,6 +181,12 @@ function App() {
       setLaunches(filtered);
       setLoading(false);
       setPage(1);
+      if (filtered.length === 0) {
+        toast.info('No launches found for the selected filter.');
+      }
+    }).catch((error) => {
+      toast.error('Failed to fetch launches. Please try again later.');
+      setLoading(false);
     });
 
     // Fetch payloads
@@ -251,6 +259,7 @@ function App() {
           launch={selectedLaunch}
           onClose={() => setSelectedLaunch(null)}
         />
+        <ToastContainer position="top-right" autoClose={2000} />
       </main>
     </div>
   );
