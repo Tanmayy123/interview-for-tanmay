@@ -19,16 +19,6 @@ function StatusBadge({ status }) {
         display: "inline-block",
         minWidth: 70,
         textAlign: "center",
-        transition: "all 0.2s ease",
-        cursor: "default",
-      }}
-      onMouseEnter={(e) => {
-        e.target.style.transform = "scale(1.05)";
-        e.target.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)";
-      }}
-      onMouseLeave={(e) => {
-        e.target.style.transform = "scale(1)";
-        e.target.style.boxShadow = "none";
       }}
     >
       {status}

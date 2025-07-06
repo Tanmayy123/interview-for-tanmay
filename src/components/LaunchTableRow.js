@@ -25,53 +25,16 @@ function LaunchTableRow({ launch, index, payloads, onClick }) {
   }
 
   return (
-    <tr 
-      onClick={() => onClick(launch)} 
-      style={{ cursor: "pointer" }}
-      className="table-row"
-    >
-      <td 
-        style={{ textAlign: 'center' }} 
-        data-label="No."
-      >
-        {String(index + 1).padStart(2, "0")}
-      </td>
-      <td 
-        style={{ textAlign: 'left', whiteSpace: 'nowrap' }} 
-        data-label="Launched (UTC)"
-      >
-        {date}
-      </td>
-      <td 
-        style={{ textAlign: 'left' }} 
-        data-label="Location"
-      >
-        {launch.launchpad || "-"}
-      </td>
-      <td 
-        style={{ textAlign: 'left' }} 
-        data-label="Mission"
-      >
-        {launch.name}
-      </td>
-      <td 
-        style={{ textAlign: 'left' }} 
-        data-label="Orbit"
-      >
-        {orbit}
-      </td>
-      <td 
-        style={{ textAlign: 'center' }} 
-        data-label="Launch Status"
-      >
+    <tr onClick={() => onClick(launch)} style={{ cursor: "pointer" }}>
+      <td style={{ textAlign: 'center' }}>{String(index + 1).padStart(2, "0")}</td>
+      <td style={{ textAlign: 'left', whiteSpace: 'nowrap' }}>{date}</td>
+      <td style={{ textAlign: 'left' }}>{launch.launchpad || "-"}</td>
+      <td style={{ textAlign: 'left' }}>{launch.name}</td>
+      <td style={{ textAlign: 'left' }}>{orbit}</td>
+      <td style={{ textAlign: 'center' }}>
         <StatusBadge status={status} />
       </td>
-      <td 
-        style={{ textAlign: 'left' }} 
-        data-label="Rocket"
-      >
-        {launch.rocket || "-"}
-      </td>
+      <td style={{ textAlign: 'left' }}>{launch.rocket || "-"}</td>
     </tr>
   );
 }
