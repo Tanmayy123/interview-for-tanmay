@@ -139,33 +139,33 @@ function FilterBar({ filter, setFilter, dateRange, setDateRange }) {
         {!filterPanelOpen && (
           <button
             style={{
-              padding: "10px 18px",
+              padding: '10px 18px',
               borderRadius: 8,
-              border: "1px solid #e0e0e0",
-              background: "#fff",
+              border: '1px solid #e0e0e0',
+              background: '#fff',
               fontWeight: 500,
               fontSize: 16,
               minWidth: 220,
-              margin: "16px 0",
-              boxShadow: "0 2px 16px #0001",
-              cursor: "pointer",
-              textAlign: "left",
+              margin: '16px 0',
+              boxShadow: '0 2px 16px #0001',
+              cursor: filter === 'upcoming' ? 'not-allowed' : 'pointer',
+              textAlign: 'left',
+              opacity: filter === 'upcoming' ? 0.5 : 1,
             }}
-            onClick={() => setFilterPanelOpen(true)}
+            onClick={() => {
+              if (filter !== 'upcoming') setFilterPanelOpen(true);
+            }}
+            disabled={filter === 'upcoming'}
           >
             <i className="fa fa-calendar" style={{ marginRight: 8 }} />
             {getRangeLabel(range, selectedQuick)}
-            <span
-              style={{
-                float: "right",
-                color: "#888",
-                fontSize: 18,
-                marginLeft: 8,
-              }}
-            >
-              ▼
-            </span>
+            <span style={{ float: 'right', color: '#888', fontSize: 18, marginLeft: 8 }}>▼</span>
           </button>
+        )}
+        {filter === 'upcoming' && (
+          <div style={{ color: '#b8860b', fontSize: 13, marginTop: 4 }}>
+            Time filter is disabled for upcoming launches
+          </div>
         )}
         {filterPanelOpen && (
           <div style={overlayStyle} onClick={() => setFilterPanelOpen(false)}>
@@ -235,7 +235,6 @@ function FilterBar({ filter, setFilter, dateRange, setDateRange }) {
       </div>
       <div>
         <i className="fa fa-filter" style={{ marginRight: 8 }} />
-
         <select value={filter} onChange={(e) => setFilter(e.target.value)}>
           <option value="all">All Launches</option>
           <option value="upcoming">Upcoming Launches</option>
