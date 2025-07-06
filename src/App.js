@@ -23,6 +23,7 @@ function App() {
   const [page, setPage] = useState(1);
   const [selectedLaunch, setSelectedLaunch] = useState(null);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
   useEffect(() => {
     document.body.className = theme;
@@ -31,6 +32,10 @@ function App() {
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  const toggleMobileFilter = () => {
+    setMobileFilterOpen(!mobileFilterOpen);
   };
 
   useEffect(() => {
@@ -217,15 +222,11 @@ function App() {
 
   return (
     <div className={`app-bg${theme === 'dark' ? ' dark' : ''}`}>
-      <AppHeader />
-      <main className="main-content">
+      <AppHeader>
         <button
           onClick={toggleTheme}
+          className="dark-mode-btn"
           style={{
-            position: 'absolute',
-            top: 24,
-            right: 24,
-            zIndex: 2000,
             padding: '8px 18px',
             borderRadius: 8,
             border: '1px solid #e0e0e0',
@@ -235,10 +236,54 @@ function App() {
             fontSize: 14,
             cursor: 'pointer',
             boxShadow: '0 2px 8px #0001',
+            transition: 'all 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.transform = 'translateY(-1px)';
+            e.target.style.boxShadow = '0 4px 12px #0002';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.transform = 'translateY(0)';
+            e.target.style.boxShadow = '0 2px 8px #0001';
           }}
         >
           {theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode'}
         </button>
+      </AppHeader>
+      <main className="main-content">
+        {/* Mobile Filter Button */}
+        <button
+          onClick={toggleMobileFilter}
+          style={{
+            position: 'absolute',
+            top: 24,
+            right: 120,
+            zIndex: 2000,
+            padding: '8px 16px',
+            borderRadius: 8,
+            border: '1px solid #e0e0e0',
+            background: '#fff',
+            color: '#222',
+            fontWeight: 500,
+            fontSize: 14,
+            cursor: 'pointer',
+            boxShadow: '0 2px 8px #0001',
+            transition: 'all 0.2s ease',
+            display: 'none', // Hidden on desktop
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.transform = 'translateY(-1px)';
+            e.target.style.boxShadow = '0 4px 12px #0002';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.transform = 'translateY(0)';
+            e.target.style.boxShadow = '0 2px 8px #0001';
+          }}
+          className="mobile-filter-btn"
+        >
+          📅 Filter
+        </button>
+
         <FilterBar
           filter={filter}
           setFilter={setFilter}
@@ -246,6 +291,8 @@ function App() {
           setDateRange={setDateRange}
           customRange={customRange}
           setCustomRange={setCustomRange}
+          mobileOpen={mobileFilterOpen}
+          setMobileOpen={setMobileFilterOpen}
         />
         <div 
           className="table-container" 

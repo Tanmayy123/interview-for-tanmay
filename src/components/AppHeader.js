@@ -1,6 +1,6 @@
 import React from "react";
 
-function AppHeader() {
+function AppHeader({ children }) {
   return (
     <header className="header">
       <div className="header-content">
@@ -9,6 +9,7 @@ function AppHeader() {
           alt="SpaceX"
           className="logo"
         />
+        {children}
       </div>
     </header>
   );
