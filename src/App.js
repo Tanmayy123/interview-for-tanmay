@@ -10,6 +10,8 @@ import {
   fetchUpcomingLaunches,
 } from "./api/spacex";
 import "./App.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PER_PAGE = 12;
 
@@ -191,6 +193,7 @@ function App() {
       setPage(1);
     }).catch((error) => {
       setLoading(false);
+      toast.error("Failed to fetch launches. Please try again.");
     });
 
     // Fetch payloads
@@ -210,13 +213,20 @@ function App() {
       })
       .catch(error => {
         console.error("Error fetching payloads:", error);
+        toast.error("Failed to fetch payloads. Please try again.");
       });
   }, [filter, dateRange]);
 
   const totalPages = Math.ceil(launches.length / PER_PAGE);
 
+  const handleRowClick = (launch) => {
+    setSelectedLaunch(launch);
+    toast.success(`Viewing details for ${launch.name}`);
+  };
+
   return (
     <div className={`app-bg${theme === 'dark' ? ' dark' : ''}`}>
+      <ToastContainer className="toast-container" position="top-right" autoClose={2500} hideProgressBar newestOnTop closeOnClick pauseOnHover theme={theme === 'dark' ? 'dark' : 'light'} />
       <AppHeader />
       <main className="main-content">
         <button
@@ -269,7 +279,7 @@ function App() {
                 payloads={payloads}
                 page={page}
                 perPage={PER_PAGE}
-                onRowClick={setSelectedLaunch}
+                onRowClick={handleRowClick}
               />
               <Pagination
                 page={page}
