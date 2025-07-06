@@ -10,8 +10,6 @@ import {
   fetchUpcomingLaunches,
 } from "./api/spacex";
 import "./App.css";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const PER_PAGE = 12;
 
@@ -24,6 +22,16 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [selectedLaunch, setSelectedLaunch] = useState(null);
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+
+  useEffect(() => {
+    document.body.className = theme;
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -181,11 +189,7 @@ function App() {
       setLaunches(filtered);
       setLoading(false);
       setPage(1);
-      if (filtered.length === 0) {
-        toast.info('No launches found for the selected filter.');
-      }
     }).catch((error) => {
-      toast.error('Failed to fetch launches. Please try again later.');
       setLoading(false);
     });
 
@@ -212,9 +216,29 @@ function App() {
   const totalPages = Math.ceil(launches.length / PER_PAGE);
 
   return (
-    <div className="app-bg">
+    <div className={`app-bg${theme === 'dark' ? ' dark' : ''}`}>
       <AppHeader />
       <main className="main-content">
+        <button
+          onClick={toggleTheme}
+          style={{
+            position: 'absolute',
+            top: 24,
+            right: 24,
+            zIndex: 2000,
+            padding: '8px 18px',
+            borderRadius: 8,
+            border: '1px solid #e0e0e0',
+            background: theme === 'dark' ? '#222' : '#fff',
+            color: theme === 'dark' ? '#fff' : '#222',
+            fontWeight: 500,
+            fontSize: 14,
+            cursor: 'pointer',
+            boxShadow: '0 2px 8px #0001',
+          }}
+        >
+          {theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode'}
+        </button>
         <FilterBar
           filter={filter}
           setFilter={setFilter}
@@ -259,7 +283,6 @@ function App() {
           launch={selectedLaunch}
           onClose={() => setSelectedLaunch(null)}
         />
-        <ToastContainer position="top-right" autoClose={2000} />
       </main>
     </div>
   );

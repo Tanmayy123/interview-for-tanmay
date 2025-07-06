@@ -130,3 +130,57 @@ body {
   height: 100vh;
   overflow: hidden;
 }
+.app-bg.dark {
+  background: #181a1b;
+}
+.app-bg.dark .main-content {
+  background: #23272f;
+  color: #f1f1f1;
+}
+.app-bg.dark .launch-table {
+  background: #23272f;
+  color: #f1f1f1;
+  box-shadow: 0 2px 12px #0008;
+}
+.app-bg.dark .launch-table th {
+  background: #23272f;
+  color: #f1f1f1;
+  border-bottom: 1px solid #333;
+}
+.app-bg.dark .launch-table td {
+  color: #e0e0e0;
+  border-bottom: 1px solid #333;
+}
+.app-bg.dark .filter-bar {
+  color: #f1f1f1;
+}
+.app-bg.dark .modal-content {
+  background: #23272f;
+  color: #f1f1f1;
+}
+.app-bg.dark .pagination button {
+  background: #23272f;
+  color: #f1f1f1;
+  border: 1px solid #444;
+}
+.app-bg.dark .pagination button:disabled {
+  opacity: 0.5;
+}
+.app-bg.dark .custom-datepicker {
+  background: #23272f;
+  color: #f1f1f1;
+}
+.app-bg.dark .custom-datepicker .react-datepicker__header {
+  background: #23272f;
+  border-bottom: 1px solid #333;
+}
+.app-bg.dark .custom-datepicker .react-datepicker__day--selected,
+.app-bg.dark .custom-datepicker .react-datepicker__day--in-range {
+  background: #333b4a;
+  color: #fff;
+}
+.app-bg.dark .custom-datepicker .react-datepicker__day--range-start,
+.app-bg.dark .custom-datepicker .react-datepicker__day--range-end {
+  background: #0056b3;
+  color: #fff;
+}

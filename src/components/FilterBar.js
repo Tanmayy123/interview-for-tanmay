@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
 
 const QUICK_RANGES = [
   { label: "All Time", getRange: () => "all" },
@@ -96,7 +93,6 @@ function FilterBar({ filter, setFilter, dateRange, setDateRange }) {
       setDateRange('all');
       setSelectedQuick(idx);
       setFilterPanelOpen(false);
-      toast.info('Showing all launches');
       return;
     }
     const result = getRange();
@@ -104,7 +100,6 @@ function FilterBar({ filter, setFilter, dateRange, setDateRange }) {
     setDateRange({ from: result[0], to: result[1] });
     setSelectedQuick(idx);
     setFilterPanelOpen(false);
-    toast.success(`Filter applied: ${QUICK_RANGES[idx].label}`);
   };
 
   const handleCalendarChange = (update) => {
@@ -113,7 +108,6 @@ function FilterBar({ filter, setFilter, dateRange, setDateRange }) {
     if (update[0] && update[1]) {
       setDateRange({ from: update[0], to: update[1] });
       setFilterPanelOpen(false);
-      toast.success(`Filter applied: ${update[0].toLocaleDateString()} - ${update[1].toLocaleDateString()}`);
     }
   };
 
@@ -162,8 +156,6 @@ function FilterBar({ filter, setFilter, dateRange, setDateRange }) {
               onClick={() => {
                 if (filter !== 'upcoming') {
                   setFilterPanelOpen(true);
-                } else {
-                  toast.warn('Time filter is disabled for upcoming launches');
                 }
               }}
               disabled={filter === 'upcoming'}
@@ -285,7 +277,6 @@ function FilterBar({ filter, setFilter, dateRange, setDateRange }) {
           }
         `}</style>
       </div>
-      <ToastContainer position="top-right" autoClose={2000} />
     </>
   );
 }
